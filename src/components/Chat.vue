@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, nextTick } from "vue"
+import { ref, reactive, nextTick, onMounted } from "vue"
 import { ClickOutside as vClickOutside } from 'element-plus'
 const message = ref("")
 const inputRef = ref(null)
@@ -7,21 +7,6 @@ const visible = ref(false)
 const popupRef = ref(null)
 const containerRef = ref(null)
 const messageList = reactive([
-  {
-    text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
-  },
-  {
-    text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
-  },
-  {
-    text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
-  },
-  {
-    text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
-  },
-  {
-    text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
-  },
   {
     text: '这是一条消息最大的亟待解决顶焦度计顶焦度计顶焦度计将顶焦度计顶焦度计顶焦度计激动激动'
   },
@@ -61,7 +46,11 @@ const send = () => {
     })
     nextTick(() => {
       window.scrollTo(0, 0)
-      focus()
+      const element = document.querySelector(".chat-container")
+      containerRef.value.scrollTo({
+        left: element.scrollHeight,
+        top: element.scrollHeight
+      })
     })
   }
 }
@@ -113,6 +102,12 @@ const showTip = () => {
 const stop = (e) => {
   flag && e.preventDefault()
 }
+onMounted(() => {
+  inputRef.value.focus()
+  nextTick(() => {
+    inputRef.value.blur()
+  })
+})
 </script>
 
 <template>
@@ -186,7 +181,7 @@ const stop = (e) => {
   <!-- 输入框 -->
   <div class="bottom" @touchmove="stop">
     <el-input v-model="message" ref="inputRef" @blur="blur" @focus="focus" @keyup.enter="send" placeholder="请输入消息..."
-      enterkeyhint="send" type="textarea" :autosize="{ minRows: 1.5, maxRows: 3 }" prefix-icon=""></el-input>
+      enterkeyhint="send" type="textarea" :autosize="{ minRows: 1.5, maxRows: 3 }"></el-input>
   </div>
 </template>
 
