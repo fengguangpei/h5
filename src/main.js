@@ -26,25 +26,24 @@ app.mount('#app')
 let baseOffset = 0
 let extendOffset = 0
 let node = null
-let time = 1
-document.addEventListener('selectionchange', () => {
-  if (time === 2) {
-    return
-  }
-  if (time === 3) {
-    time = 1
-    return
-  }
-  const selection = window.getSelection()
-  node = selection.baseNode
-  baseOffset = selection.anchorOffset
-  extendOffset = selection.focusOffset
-  selection.empty()
-  time++
-  setTimeout(() => {
-    const range = new Range()
-    range.setStart(node, baseOffset)
-    range.setEnd(node, extendOffset)
-    selection.addRange(range)
-  }, 1000)
-})
+let flag = false
+let timer = null
+// document.addEventListener('selectionchange', () => {
+//   if (timer) {
+//     return
+//   }
+//   const selection = window.getSelection()
+//   node = node || selection.baseNode
+//   baseOffset = selection.anchorOffset
+//   extendOffset = selection.focusOffset
+//   timer = setTimeout(() => {
+//     selection.empty()
+//     setTimeout(() => {
+//       const selection = window.getSelection()
+//       const range = new Range()
+//       range.setStart(node, baseOffset)
+//       range.setEnd(node, extendOffset)
+//       selection.addRange(range)
+//     })
+//   }, 2000)
+// })
